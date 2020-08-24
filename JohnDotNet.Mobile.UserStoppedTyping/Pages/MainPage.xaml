@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:b="clr-namespace:JohnDotNet.Mobile.UserStoppedTyping.Behaviors"
+             x:Class="JohnDotNet.Mobile.UserStoppedTyping.Pages.MainPage">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Thickness x:Key="HorizontalMargin">20,0</Thickness>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <StackLayout Spacing="10" Padding="0,20,0,0">
+
+        <Label Text="Options" FontSize="Title" HorizontalTextAlignment="Center" />
+        <BoxView HeightRequest="1" BackgroundColor="{AppThemeBinding Dark=White, Light=Black}" Margin="0,0,0,10" />
+
+        <Grid ColumnDefinitions="2*, *" Margin="{StaticResource HorizontalMargin}">
+            <Label Text="User stopped typing threshold" VerticalTextAlignment="Center" />
+            <Entry x:Name="TypingThresholdSetting" Text="1000" Keyboard="Numeric" Grid.Column="1" />
+
+            <Label Text="Auto dismiss keyboard" VerticalTextAlignment="Center" Grid.Row="1" />
+            <Switch x:Name="AutoDismissKeyboardSetting" HorizontalOptions="End" Grid.Row="1" Grid.Column="1" />
+        </Grid>
+
+        <Label Text="Sample" FontSize="Title" HorizontalTextAlignment="Center" Margin="0,20,0,0" />
+        <BoxView HeightRequest="1" BackgroundColor="{AppThemeBinding Dark=White, Light=Black}" Margin="0,0,0,10" />
+
+        <Entry Placeholder="Start searching..." Margin="{StaticResource HorizontalMargin}">
+            <Entry.Behaviors>
+                <b:UserStoppedTypingBehavior Command="{Binding SearchCommand}"
+                                             StoppedTypingThreshold="{Binding Path=Text, Source={x:Reference TypingThresholdSetting}}"
+                                             AutoDismissKeyboard="{Binding Path=IsToggled, Source={x:Reference AutoDismissKeyboardSetting}}" />
+            </Entry.Behaviors>
+        </Entry>
+
+        <Label Text="{Binding PerformedSearches}" Margin="{StaticResource HorizontalMargin}" />
+    </StackLayout>
+
+</ContentPage>
