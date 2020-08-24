@@ -1,6 +1,5 @@
-﻿using System;
+﻿using JohnDotNet.Mobile.UserStoppedTyping.Pages;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace JohnDotNet.Mobile.UserStoppedTyping
 {
