@@ -56,23 +56,6 @@ namespace JohnDotNet.Mobile.UserStoppedTyping.Behaviors
             }
             _tokenSource = new CancellationTokenSource();
 
-            //try
-            //{
-            //    await Task.Delay(TypingThreshold, _tokenSource.Token);
-
-            //    if (_tokenSource.IsCancellationRequested) return;
-
-            //    if (Command != null && Command.CanExecute(e.NewTextValue))
-            //    {
-            //        Command.Execute(e.NewTextValue);
-
-            //        //entry.Unfocus();
-            //    }
-            //}
-            //catch (System.Exception ex)
-            //{
-            //}
-
             PerformTextChanged(sender as Entry, e.NewTextValue, _tokenSource.Token);
         }
 
