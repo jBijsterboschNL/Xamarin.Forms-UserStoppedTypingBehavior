@@ -5,7 +5,7 @@ using Xamarin.Forms;
 
 namespace JohnDotNet.Mobile.UserStoppedTyping.Behaviors
 {
-    public class UserStoppedTypingBehavior : BehaviorBase<Entry>
+    public class UserStoppedTypingBehavior : BehaviorBase<InputView>
     {
         private CancellationTokenSource _tokenSource;
 
@@ -34,21 +34,21 @@ namespace JohnDotNet.Mobile.UserStoppedTyping.Behaviors
 
         #endregion Bindable Properties
 
-        protected override void OnAttachedTo(Entry bindable)
+        protected override void OnAttachedTo(InputView inputView)
         {
-            base.OnAttachedTo(bindable);
+            base.OnAttachedTo(inputView);
             
-            bindable.TextChanged += Entry_TextChanged;
+            inputView.TextChanged += InputView_TextChanged;
         }
 
-        protected override void OnDetachingFrom(Entry bindable)
+        protected override void OnDetachingFrom(InputView inputView)
         {
-            base.OnDetachingFrom(bindable);
+            base.OnDetachingFrom(inputView);
 
-            bindable.TextChanged -= Entry_TextChanged;
+            inputView.TextChanged -= InputView_TextChanged;
         }
 
-        private void Entry_TextChanged(object sender, TextChangedEventArgs e)
+        private void InputView_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (_tokenSource != null)
             {
@@ -56,10 +56,10 @@ namespace JohnDotNet.Mobile.UserStoppedTyping.Behaviors
             }
             _tokenSource = new CancellationTokenSource();
 
-            PerformTextChanged(sender as Entry, e.NewTextValue, _tokenSource.Token);
+            PerformTextChanged(sender as InputView, e.NewTextValue, _tokenSource.Token);
         }
 
-        private async Task PerformTextChanged(Entry entry, string newTextValue, CancellationToken token)
+        private async Task PerformTextChanged(InputView inputView, string newTextValue, CancellationToken token)
         {
             await Task.Delay(StoppedTypingThreshold);
 
@@ -71,7 +71,7 @@ namespace JohnDotNet.Mobile.UserStoppedTyping.Behaviors
 
                 if (AutoDismissKeyboard)
                 {
-                    entry.Unfocus();
+                    inputView.Unfocus();
                 }
             }
         }
